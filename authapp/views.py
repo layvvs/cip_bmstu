@@ -18,5 +18,9 @@ def login_view(request: HttpRequest):
     
     return render(request, "authapp/login.html", {"error": "Invalid login credentials"})
 
+def logout_view(request: HttpRequest):
+    logout(request)
+    return redirect('/')
+
 def signup_view(request):
     ...
