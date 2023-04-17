@@ -20,8 +20,12 @@
           Центр Интеллектуальной Собственности МГТУ им. Н.Э. Баумана
         </p>
         <div class="text-right">
+          {% if not user.is_authenticated %}
           <a href="/authapp/login">Вход</a>
           <a class="ml-2" href="/authapp/signup">Регистрация</a>
+          {% else %}
+          <a href="authapp/logout">Выйти</a>
+          {% endif %}
         </div>
       </div>
     </header>
