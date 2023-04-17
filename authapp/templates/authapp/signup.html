@@ -1,5 +1,6 @@
 {% extends 'authapp/base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block title %}
     Регистрация
 {% endblock%}
@@ -7,26 +8,30 @@
 {% block body %}
 <div class="row">  
   <div class="container col-md-3 text-center">
-    <form method="post">
+    <form method="POST">
       {% csrf_token %}
 
       <img class="mb-4" width="125" height="125" src="{% static 'mainapp/image/bmstu.png' %}" alt="BMSTU">
       <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
 
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="email" placeholder="name@bmstu.ru">
+        {% comment %} <input type="email" class="form-control" id="email" placeholder="name@bmstu.ru"> {% endcomment %}
+        {% render_field form.email type="email" class="form-control" id="id_email" placeholder="name@bmstu.ru"%}
       </div>
 
       <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="password" placeholder="Пароль">
+        {% comment %} <input type="password" class="form-control" id="password" placeholder="Пароль"> {% endcomment %}
+        {% render_field form.password1 type="password" class="form-control" id="password" placeholder="Пароль"%}
       </div>
 
       <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="password_confirmation" placeholder="Подтверждение пароля">
+        {% comment %} <input type="password" class="form-control" id="password_confirmation" placeholder="Подтверждение пароля"> {% endcomment %}
+        {% render_field form.password2  type="password" class="form-control" id="password_confirmation" placeholder="Подтверждение пароля"%}
       </div>
 
       <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегестрироваться</button>
       </form>
   </div>
+  {{ form.errors }}
 </div>
 {% endblock %}
