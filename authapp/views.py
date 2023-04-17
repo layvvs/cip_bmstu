@@ -1,9 +1,11 @@
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from .forms import CreateUserForm
+
 import re
+
 
 def validate_email(email):
     pattern = r'^[a-zA-Z0-9._%+-]+@.*bmstu\.ru$'
@@ -12,6 +14,7 @@ def validate_email(email):
 def login_view(request: HttpRequest):
     if request.method == "GET":
         if request.user.is_authenticated:
+            messages.success(request, 'Вы успешно вошли.')
             return redirect('/')
         return render(request, 'authapp/login.html')
     email = request.POST["email"]
@@ -30,6 +33,7 @@ def logout_view(request: HttpRequest):
 def signup_view(request: HttpRequest):
     if request.method == "GET":
         if request.user.is_authenticated:
+            messages.success(request, 'Вы успешно вышли.')
             return redirect('/')
         
     form = CreateUserForm()
@@ -40,9 +44,10 @@ def signup_view(request: HttpRequest):
             if validate_email(email):             
                 user = form.save()
                 login(request, user)
+                messages.success(request, 'Вы успешно зарегестрировались.')
                 return redirect('/')
             else:
-                form.add_error('email', 'Invalid email address')
+                form.add_error('email', 'Используйте электронную почту с доменом bmstu')
     
     context = {'form': form}
     return render(request, 'authapp/signup.html', context)
