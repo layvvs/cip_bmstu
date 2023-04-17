@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'authapp.apps.AuthappConfig',
 ]
 
+AUTH_USER_MODEL = 'authapp.CustomUser'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
