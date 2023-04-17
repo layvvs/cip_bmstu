@@ -1,6 +1,6 @@
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login, logout, authenticate
 
 def login_view(request: HttpRequest):
     if request.method == "GET":
@@ -18,7 +18,5 @@ def login_view(request: HttpRequest):
     
     return render(request, "authapp/login.html", {"error": "Invalid login credentials"})
 
-def signup_view(request: HttpRequest):
-    return render(request, 'authapp/signup.html')
-
-        
+def signup_view(request):
+    ...
