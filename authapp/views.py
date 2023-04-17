@@ -27,7 +27,11 @@ def logout_view(request: HttpRequest):
     logout(request)
     return redirect('/')
 
-def signup_view(request):
+def signup_view(request: HttpRequest):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            return redirect('/')
+        
     form = CreateUserForm()
     if request.method == "POST":
         form = CreateUserForm(request.POST)
