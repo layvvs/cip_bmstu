@@ -22,7 +22,6 @@ ALLOWED_HOSTS = str(os.getenv("DJANGO_ALLOWED_HOSTS")).split(" ")
 # Application definition
 
 INSTALLED_APPS = [
-    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +31,9 @@ INSTALLED_APPS = [
 
     'mainapp.apps.MainappConfig',
     'authapp.apps.AuthappConfig',
+
+    'crispy_forms',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'authapp.email_auth.EmailAuth',
 ]
+AUTH_USER_MODEL = 'authapp.CustomUser'
