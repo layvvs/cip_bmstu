@@ -1,14 +1,11 @@
 from django.urls import path
-from .views import (
-    login_view, 
-    signup_view, 
-    logout_view
-)
+from . import views
 
 app_name = "authapp"
 
 urlpatterns = [
-    path("login/", login_view, name="login"),
-    path("logout/", logout_view, name="logout"),
-    path("signup/", signup_view, name="signup")
+    path("login/", views.login_view, name="login"),
+    path("logout/", views.logout_view, name="logout"),
+    path("signup/", views.signup_view, name="signup"),
+    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
 ]

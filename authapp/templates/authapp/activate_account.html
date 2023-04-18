@@ -1,0 +1,7 @@
+{% autoescape off %}
+Здравствуйте,
+
+Пожалуйста, перейдите по ссылке ниже, чтобы подтвердить свою регистрацию на портале:
+
+{{ protocol }}://{{ domain }}{% url 'authapp:activate' uidb64=uid token=token %}
+{% endautoescape %}

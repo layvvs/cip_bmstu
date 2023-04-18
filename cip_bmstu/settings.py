@@ -116,7 +116,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 
 # Default primary key field type
@@ -129,3 +129,14 @@ AUTHENTICATION_BACKENDS = [
     'authapp.email_auth.EmailAuth',
 ]
 AUTH_USER_MODEL = 'authapp.CustomUser'
+
+# Email Backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = str(os.getenv("EMAIL_USER"))
+EMAIL_HOST_PASSWORD = str(os.getenv("EMAIL_PASSWORD"))
+DEFAULT_FROM_EMAIL = str(os.getenv("EMAIL_USER"))
+
+PASSWORD_RESET_TIMEOUT = 14400
