@@ -3,9 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import CreateUserForm
-
 import re
-
 
 def validate_email(email):
     pattern = r'^[a-zA-Z0-9._%+-]+@.*bmstu\.ru$'
@@ -14,7 +12,7 @@ def validate_email(email):
 def login_view(request: HttpRequest):
     if request.method == "GET":
         if request.user.is_authenticated:
-            messages.success(request, 'Вы успешно вошли.')
+            messages.success(request, 'Вы уже в системе.')
             return redirect('/')
         return render(request, 'authapp/login.html')
     email = request.POST["email"]
@@ -22,20 +20,20 @@ def login_view(request: HttpRequest):
     user = authenticate(request, username=email, password=password)
     if user:
         login(request, user)
+        messages.success(request, 'Вы успешно вошли.')
         return redirect('/')
-    
     return render(request, "authapp/login.html", {"error": "Invalid login credentials"})
 
 def logout_view(request: HttpRequest):
     logout(request)
+    messages.success(request, 'Вы успешно вышли.')
     return redirect('/')
 
 def signup_view(request: HttpRequest):
     if request.method == "GET":
         if request.user.is_authenticated:
-            messages.success(request, 'Вы успешно вышли.')
-            return redirect('/')
-        
+            messages.success(request, 'Вы уже в системе.')
+            return redirect('/') 
     form = CreateUserForm()
     if request.method == "POST":
         form = CreateUserForm(request.POST)
@@ -48,6 +46,5 @@ def signup_view(request: HttpRequest):
                 return redirect('/')
             else:
                 form.add_error('email', 'Используйте электронную почту с доменом bmstu')
-    
     context = {'form': form}
     return render(request, 'authapp/signup.html', context)
