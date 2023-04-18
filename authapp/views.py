@@ -26,10 +26,15 @@ def login_view(request: HttpRequest):
     password = request.POST["password"]
     user = authenticate(request, username=email, password=password)
     if user:
-        login(request, user)
-        messages.success(request, 'Вы успешно вошли.')
-        return redirect('/')
-    return render(request, "authapp/login.html", {"error": "Invalid login credentials"})
+        if user.is_active:
+            login(request, user)
+            messages.success(request, 'Вы успешно вошли.')
+            return redirect('/')
+        else:
+            messages.error(request, 'Подтвердите свою элетронную почту.')
+            return redirect('/')
+    else:
+        return render(request, "authapp/login.html", {"error": "Invalid login credentials"})
 
 def logout_view(request: HttpRequest):
     logout(request)
@@ -43,38 +48,27 @@ def activate(request, uidb64, token):
         user = User.objects.get(pk=uid)
     except:
         user = None
-
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-
-        messages.success(request, "Thank you for your email confirmation. Now you can login your account.")
+        messages.success(request, "Ваша почта подтверждена.")
         return redirect('/authapp/login')
     else:
-        messages.error(request, "Activation link is invalid!")
+        messages.error(request, "Ссылка недействительна.")
     return redirect('/')
 
 def activate_email(request, user, to_email):
-    mail_subject = "Activate your user account."
-    print('hi')
+    mail_subject = "Центр Интеллектуальной Собственности МГТУ им. Н.Э. Баумана"
     message = render_to_string("authapp/activate_account.html", {
         'domain': get_current_site(request).domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
         "protocol": 'https' if request.is_secure() else 'http'
     })
-    print(123)
-    print(message)
     email = EmailMessage(mail_subject, message, to=[to_email])
-    print(321)
-    n = email.send()
-    print('n: ', n)
-    if n == 1:
-        print('suc')
-        messages.success(request, f'Dear <b>{user}</b>, please go to you email <b>{to_email}</b> inbox and click on \
-                received activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder.')
+    if email.send():
+        messages.success(request, f'Письмо с подтверждением почты отправлено на адрес <b>{to_email}</b>.')
     else:
-        print('er')
         messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')
 
 def signup_view(request: HttpRequest):
@@ -90,8 +84,8 @@ def signup_view(request: HttpRequest):
             if validate_email(email):             
                 user = form.save(commit=False)
                 user.is_active = False
-                activate_email(request, user, email)
                 user.save()
+                activate_email(request, user, email)
                 return redirect('/')
             else:
                 form.add_error('email', 'Используйте электронную почту с доменом bmstu')
