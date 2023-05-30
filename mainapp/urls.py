@@ -1,9 +1,11 @@
 from django.urls import path
-from .views import main_index, new_doc
+from . import views
+
 
 app_name = "mainapp"
 
 urlpatterns=[
-    path("", main_index, name="main-index"),
-    path("new_doc/", new_doc, name="new-doc"),
+    path("", views.main_index, name="main-index"),
+    path("new_doc/", views.new_doc, name="new-doc"),
+    # path("", views.records_counter, name='main-index'),
 ]

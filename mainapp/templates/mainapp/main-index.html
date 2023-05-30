@@ -35,14 +35,20 @@
   {% if user.is_authenticated %}
 
     <div class="container" id="forms_bar">
-      <div class="pb-3 border-bottom">
+      <div class="border-bottom">
         <a href="mainapp/new_doc">Добавить новый документ</a>
+        <p class="font-weight-light">
+          Количество документов: {{ counter }}
+        </p>
+      </div>
+      <div class="text-right">
+
       </div>
     </div>
 
     <div class="container mt-3" id="search_bar">
       <div class="pb-3 border-bottom">
-        <form class="form-inline">
+        <form class="form-inline md-3">
           <input class="form-control" type="text" placeholder="Поиск" aria-label="Search">
         </form>
       </div>
