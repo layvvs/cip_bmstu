@@ -50,11 +50,13 @@
                 <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Авторы</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="ФИО" required>
-                <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Подразделение" required>
-                <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Должность" required>
-                <button type="button" class="btn btn-primary mt-1">Добавить автора</button>
+                <label for="authors=name">Авторы</label>
+                <input type="text" class="form-control" id="authors-name-0" placeholder="ФИО" required>
+                <input type="text" class="form-control mt-1" id="authors-unit-0" placeholder="Подразделение" required>
+                <input type="text" class="form-control mt-1" id="authors-post-0" placeholder="Должность" required>
+                <div class="new-authors-form">
+                </div>
+                <button type="button" class="add-author-btn btn btn-primary mt-1">Добавить автора</button>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Ответственное лицо</label>
@@ -103,4 +105,6 @@
     </div>
 </body>
 <script src="{% static 'js/jquery-3.7.0.min.js' %}" ></script>
+<script src="{% static 'js/main.js' %}" ></script>
+
 </html>
