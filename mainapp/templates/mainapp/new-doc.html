@@ -14,51 +14,77 @@
         <form>
             <div class="form-group">
                 <label for="formGroupExampleInput">Первичное наименование </label>
-                <input type="text" class="form-control" id="formGroupExampleInput">
+                <input type="text" class="form-control" id="formGroupExampleInput" required>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Итоговое наименование</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Вид объекта</label> <!-- Сделать дропдаун -->
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <label for="exampleFormControlSelect1">Вид объекта</label>
+                <select class="form-control custom-select" id="exampleFormControlSelect1" required>
+                    <option selected>Изобретение</option>
+                    <option>Полезная модель</option>
+                    <option>Промышленный образец</option>
+                    <option>Программа для ЭВМ</option>
+                    <option>База данных</option>
+                    <option>Ноу-хау</option>
+                    <option>Топология интегральных микросхем</option>
+                    <option>Товарный знак</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Номер охранного документа</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Дата охранного документа</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Номер заявки</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Дата заявки</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Авторы</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="ФИО" required>
+                <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Подразделение" required>
+                <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Должность" required>
+                <button type="button" class="btn btn-primary mt-1">Добавить автора</button>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Ответственное лицо</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">служебный/инициативный</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <label for="exampleFormControlSelect1">Служебный/Инициативный</label>
+                <select class="form-control custom-select" id="exampleFormControlSelect1" required>
+                    <option selected>Служебный</option>
+                    <option>Инициативный</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Учет в ИС</label> <!-- Радио -->
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <label for="inlineRadio1">Учет в ИС</label> <br> 
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                    <label class="form-check-label" for="inlineRadio1">Да</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                    <label class="form-check-label" for="inlineRadio2">Нет</label>
+                </div>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Распоряжение исключительными правами</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <label for="exampleFormControlSelect1">Распоряжение исключительными правами</label>
+                <select class="form-control custom-select" id="exampleFormControlSelect1" required>
+                    <option selected>Нет</option>
+                    <option>Договор отчуждения</option>
+                    <option>Лицензионный договор</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Выплата вознаграждений авторам за распоряжение</label>
@@ -66,14 +92,15 @@
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Охрана за рубежом</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Дата следующей выплаты пошлины</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Добавить документ</button>
         </form>
     </div>
 </body>
+<script src="{% static 'js/jquery-3.7.0.min.js' %}" ></script>
 </html>

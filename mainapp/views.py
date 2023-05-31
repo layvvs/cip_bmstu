@@ -12,10 +12,3 @@ def main_index(request: HttpRequest):
 def new_doc(request: HttpRequest):
     return render(request, 'mainapp/new-doc.html')
 
-# def records_counter(request):
-#     counter = IpcArchive.objects.count()
-#     context = {
-#         'counter': counter
-#     }
-
-#     return render(request, 'mainapp/main-index.html', context)
