@@ -20,9 +20,9 @@
                 <label for="formGroupExampleInput2">Итоговое наименование</label>
                 <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Вид объекта</label>
-                <select class="form-control custom-select" id="exampleFormControlSelect1" required>
+            <div class="form-group type-of-object">
+                <label for="select-type-of-object">Вид объекта</label>
+                <select class="form-control custom-select" id="select-type-of-object" required>
                     <option selected>Изобретение</option>
                     <option>Полезная модель</option>
                     <option>Промышленный образец</option>
@@ -50,24 +50,33 @@
                 <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
-                <label for="authors=name">Авторы</label>
+                <label for="authors-name-0">Авторы</label>
                 <input type="text" class="form-control" id="authors-name-0" placeholder="ФИО" required>
                 <input type="text" class="form-control mt-1" id="authors-unit-0" placeholder="Подразделение" required>
                 <input type="text" class="form-control mt-1" id="authors-post-0" placeholder="Должность" required>
                 <div class="new-authors-form">
                 </div>
-                <button type="button" class="add-author-btn btn btn-primary mt-1">Добавить автора</button>
+                <button type="button" class="btn btn-primary mt-3" id="add-author-btn">Добавить автора</button>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Ответственное лицо</label>
                 <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Служебный/Инициативный</label>
-                <select class="form-control custom-select" id="exampleFormControlSelect1" required>
+            <div class="form-group service-proactive">
+                <label for="select-service-proactive">Служебный/Инициативный</label>
+                <select class="form-control custom-select" id="select-service-proactive" required>
                     <option selected>Служебный</option>
                     <option>Инициативный</option>
                 </select>
+                    <div class="mt-3" id="ser-proac-forms">
+                        <select class="form-control custom-select mt-1" id="exampleFormControlSelect1" required>
+                            <option selected>Распоряжение</option>
+                            <option>Приказ</option>
+                            <option>Служебное задание</option>
+                        </select>
+                        <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Номер приказа" required>
+                        <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Номер договора" required>
+                    </div>
             </div>
             <div class="form-group">
                 <label for="inlineRadio1">Учет в ИС</label> <br> 
