@@ -13,16 +13,16 @@
     <div class="container col-md-3 mt-5">
         <form>
             <div class="form-group">
-                <label for="formGroupExampleInput">Первичное наименование </label>
-                <input type="text" class="form-control" id="formGroupExampleInput" required>
+                <label for="primary-name">Первичное наименование </label>
+                <input type="text" class="form-control" name="primary-name" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Итоговое наименование</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="final-name">Итоговое наименование</label>
+                <input type="text" class="form-control" name="final-name" required>
             </div>
-            <div class="form-group type-of-object">
-                <label for="select-type-of-object">Вид объекта</label>
-                <select class="form-control custom-select" id="select-type-of-object" required>
+            <div class="form-group">
+                <label for="type-of-object">Вид объекта</label>
+                <select class="form-control custom-select" name="type-of-object" required>
                     <option selected>Изобретение</option>
                     <option>Полезная модель</option>
                     <option>Промышленный образец</option>
@@ -34,34 +34,35 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Номер охранного документа</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="protection-document-number">Номер охранного документа</label>
+                <input type="text" class="form-control" name="protection-document-number" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Дата охранного документа</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
+                <label for="date-of-security-document">Дата охранного документа</label>
+                <input type="text" class="form-control" name="date-of-security-document" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Номер заявки</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="application-number">Номер заявки</label>
+                <input type="text" class="form-control" name="application-number" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Дата заявки</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
+                <label for="application-date">Дата заявки</label>
+                <input type="text" class="form-control" name="application-date" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
                 <label for="authors-name-0">Авторы</label>
-                <input type="text" class="form-control" id="authors-name-0" placeholder="ФИО" required>
-                <input type="text" class="form-control mt-1" id="authors-unit-0" placeholder="Подразделение" required>
-                <input type="text" class="form-control mt-1" id="authors-post-0" placeholder="Должность" required>
+                <input type="text" class="form-control" name="authors-name-0" placeholder="ФИО" required>
+                <input type="text" class="form-control mt-1" name="authors-unit-0" placeholder="Подразделение" required>
+                <input type="text" class="form-control mt-1" name="authors-post-0" placeholder="Должность" required>
                 <div class="new-authors-form">
                 </div>
                 <button type="button" class="btn btn-primary mt-3" id="add-author-btn" onclick="addAuthor()">Добавить автора</button>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Ответственное лицо</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="responsible-person">Ответственное лицо</label>
+                <input type="text" class="form-control" name="responsible-person" required>
             </div>
+            <!-- Поменять id на name -->
             <div class="form-group">
                 <label for="select-service-proactive">Служебный/Инициативный</label>
                 <select class="form-control custom-select" id="select-service-proactive" required>

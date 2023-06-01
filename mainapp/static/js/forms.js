@@ -5,10 +5,10 @@ function addAuthor(){
     authorCounter += 1;
     $(".new-authors-form").append(
         `<div class="mt-3 mb-1" id="author-${authorCounter}">
-            <input type="text" class="form-control" id="authors-name-${authorCounter}" placeholder="ФИО" required>
-            <input type="text" class="form-control mt-1" id="authors-unit-${authorCounter}" placeholder="Подразделение" required>
-            <input type="text" class="form-control mt-1" id="authors-post-${authorCounter}" placeholder="Должность" required>
-            <button type="button" class="btn btn-primary mt-3" id="remove-author-btn-${authorCounter}" onclick="removeAuthor(${authorCounter})">Удалить автора</button>
+            <input type="text" class="form-control" name=="authors-name-${authorCounter}" placeholder="ФИО" required>
+            <input type="text" class="form-control mt-1" name=="authors-unit-${authorCounter}" placeholder="Подразделение" required>
+            <input type="text" class="form-control mt-1" name=="authors-post-${authorCounter}" placeholder="Должность" required>
+            <button type="button" class="btn btn-primary mt-3" name=="remove-author-btn-${authorCounter}" onclick="removeAuthor(${authorCounter})">Удалить автора</button>
         </div>`
         );
 }
