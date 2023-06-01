@@ -1,15 +1,36 @@
-let counter = 0
-$("#add-author-btn").on('click', function (ev){
-    counter ++;
+let authorCounter = 0;
+let securityCounter = 0;
+
+function addAuthor(){
+    authorCounter += 1;
     $(".new-authors-form").append(
-        `<div class="mt-3 mb-1">\
-            <input type="text" class="form-control" id="authors-name-${counter}" placeholder="ФИО" required>\
-            <input type="text" class="form-control mt-1" id="authors-unit-${counter}" placeholder="Подразделение" required>\
-            <input type="text" class="form-control mt-1" id="authors-post-${counter}" placeholder="Должность" required>\
+        `<div class="mt-3 mb-1" id="author-${authorCounter}">
+            <input type="text" class="form-control" id="authors-name-${authorCounter}" placeholder="ФИО" required>
+            <input type="text" class="form-control mt-1" id="authors-unit-${authorCounter}" placeholder="Подразделение" required>
+            <input type="text" class="form-control mt-1" id="authors-post-${authorCounter}" placeholder="Должность" required>
+            <button type="button" class="btn btn-primary mt-3" id="remove-author-btn-${authorCounter}" onclick="removeAuthor(${authorCounter})">Удалить автора</button>
         </div>`
         );
-});
+}
 
+function addSecurity(){
+    securityCounter += 1;
+    $(".new-security-form").append(
+        `<div class="mt-3 mb-1" id="security-${securityCounter}">
+            <input type="text" class="form-control mt-1" id="security-name-${securityCounter}" required>
+            <button type="button" class="btn btn-primary mt-3" id="remove-author-btn-${securityCounter}" onclick="removeSecurity(${securityCounter})">Удалить поле</button>
+        </div>`
+        );
+}
+
+
+function removeAuthor(id){
+    document.getElementById(`author-${id}`).remove();
+}
+
+function removeSecurity(id){
+    document.getElementById(`security-${id}`).remove();
+}
 
 $("#select-service-proactive").on('click', function(ev){
 

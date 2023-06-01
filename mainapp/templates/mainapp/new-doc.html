@@ -56,7 +56,7 @@
                 <input type="text" class="form-control mt-1" id="authors-post-0" placeholder="Должность" required>
                 <div class="new-authors-form">
                 </div>
-                <button type="button" class="btn btn-primary mt-3" id="add-author-btn">Добавить автора</button>
+                <button type="button" class="btn btn-primary mt-3" id="add-author-btn" onclick="addAuthor()">Добавить автора</button>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Ответственное лицо</label>
@@ -106,16 +106,19 @@
             <div class="form-group">
                 <label for="formGroupExampleInput2">Охрана за рубежом</label>
                 <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <div class="new-security-form">
+                </div>
+                <button type="button" class="btn btn-primary mt-3" id="add-security-btn" onclick="addSecurity()">Добавить поле</button>
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Дата следующей выплаты пошлины</label>
                 <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
             </div>
-            <button type="submit" class="btn btn-primary">Добавить документ</button>
+            <button type="submit" class="btn btn-primary mb-5">Добавить документ</button>
         </form>
     </div>
 </body>
 <script src="{% static 'js/jquery-3.7.0.min.js' %}" ></script>
-<script src="{% static 'js/main.js' %}" ></script>
+<script src="{% static 'js/forms.js' %}" ></script>
 
 </html>
