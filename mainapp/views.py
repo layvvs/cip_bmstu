@@ -13,7 +13,24 @@ def main_index(request: HttpRequest):
 
 def new_doc(request: HttpRequest):
     if request.method == "POST":
-        print(request.POST)
-        messages.success(request, 'Документ успешно добавлен в базу.')    
+        data = request.POST
+        feel_bd(data)
+
+        messages.success(request, 'Документ успешно добавлен в базу.')
         return redirect('/')
     return render(request, 'mainapp/new-doc.html')
+
+
+def feel_bd(data):
+    #authors
+    names = data.getlist('authors-name')
+    units = data.getlist('authors-unit')
+    posts = data.getlist('authors-post')
+    # add uniqueness check     
+    for i in range(len(names)):
+        author = Authors()
+
+        author.author = names[i]
+        author.division = units[i]
+        author.post = posts[i]
+        author.save()
