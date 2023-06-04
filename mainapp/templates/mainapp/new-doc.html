@@ -11,18 +11,19 @@
 </head>
 <body>
     <div class="container col-md-3 mt-5">
-        <form>
+        <form method="POST">
+            {% csrf_token %}
             <div class="form-group">
-                <label for="formGroupExampleInput">Первичное наименование </label>
-                <input type="text" class="form-control" id="formGroupExampleInput" required>
+                <label for="primary-name">Первичное наименование </label>
+                <input type="text" class="form-control" name="primary-name" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Итоговое наименование</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="final-name">Итоговое наименование</label>
+                <input type="text" class="form-control" name="final-name" required>
             </div>
-            <div class="form-group type-of-object">
-                <label for="select-type-of-object">Вид объекта</label>
-                <select class="form-control custom-select" id="select-type-of-object" required>
+            <div class="form-group">
+                <label for="type-of-object">Вид объекта</label>
+                <select class="form-control custom-select" name="type-of-object" required>
                     <option selected>Изобретение</option>
                     <option>Полезная модель</option>
                     <option>Промышленный образец</option>
@@ -34,64 +35,64 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Номер охранного документа</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="protection-document-number">Номер охранного документа</label>
+                <input type="text" class="form-control" name="protection-document-number" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Дата охранного документа</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
+                <label for="date-of-security-document">Дата охранного документа</label>
+                <input type="text" class="form-control" name="date-of-security-document" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Номер заявки</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="application-number">Номер заявки</label>
+                <input type="text" class="form-control" name="application-number" required>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Дата заявки</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
+                <label for="application-date">Дата заявки</label>
+                <input type="text" class="form-control" name="application-date" placeholder="дд.мм.гггг." required>
             </div>
             <div class="form-group">
                 <label for="authors-name-0">Авторы</label>
-                <input type="text" class="form-control" id="authors-name-0" placeholder="ФИО" required>
-                <input type="text" class="form-control mt-1" id="authors-unit-0" placeholder="Подразделение" required>
-                <input type="text" class="form-control mt-1" id="authors-post-0" placeholder="Должность" required>
+                <input type="text" class="form-control" name="authors-name" placeholder="ФИО" required>
+                <input type="text" class="form-control mt-1" name="authors-unit" placeholder="Подразделение" required>
+                <input type="text" class="form-control mt-1" name="authors-post" placeholder="Должность" required>
                 <div class="new-authors-form">
                 </div>
-                <button type="button" class="btn btn-primary mt-3" id="add-author-btn">Добавить автора</button>
+                <button type="button" class="btn btn-primary mt-3" id="add-author-btn" onclick="addAuthor()">Добавить автора</button>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Ответственное лицо</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="responsible-person">Ответственное лицо</label>
+                <input type="text" class="form-control" name="responsible-person" required>
             </div>
             <div class="form-group">
                 <label for="select-service-proactive">Служебный/Инициативный</label>
-                <select class="form-control custom-select" id="select-service-proactive" required>
+                <select class="form-control custom-select" id="select-service-proactive" name="select-service-proactive" required>
                     <option selected>Служебный</option>
                     <option>Инициативный</option>
                 </select>
                     <div class="mt-3" id="ser-proac-forms">
-                        <select class="form-control custom-select mt-1" id="exampleFormControlSelect1" required>
+                        <select class="form-control custom-select mt-1" name="select-type-service" required>
                             <option selected>Распоряжение</option>
                             <option>Приказ</option>
                             <option>Служебное задание</option>
                         </select>
-                        <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Номер приказа" required>
-                        <input type="text" class="form-control mt-1" id="formGroupExampleInput2" placeholder="Номер договора" required>
+                        <input type="text" class="form-control mt-1" name="order-number" placeholder="Номер приказа" required>
+                        <input type="text" class="form-control mt-1" name="contract-number" placeholder="Номер договора" required>
                     </div>
             </div>
             <div class="form-group">
                 <label for="inlineRadio1">Учет в ИС</label> <br> 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                    <input class="form-check-input" type="radio" name="accounting" id="inlineRadio1" value="Да" checked>
                     <label class="form-check-label" for="inlineRadio1">Да</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                    <input class="form-check-input" type="radio" name="accounting" id="inlineRadio2" value="Нет">
                     <label class="form-check-label" for="inlineRadio2">Нет</label>
                 </div>
             </div>
             <div class="form-group">
                 <label for="type-of-contract">Распоряжение исключительными правами</label>
-                <select class="form-control custom-select" id="type-of-contract" required>
+                <select class="form-control custom-select" id="type-of-contract" name="type-of-contract" required>
                     <option selected>Нет</option>
                     <option>Договор отчуждения</option>
                     <option>Лицензионный договор</option>
@@ -100,22 +101,28 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Выплата вознаграждений авторам за распоряжение</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <label for="reward-payment">Выплата вознаграждений авторам за распоряжение</label>
+                <input type="text" class="form-control" name="reward-payment">
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Охрана за рубежом</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" required>
+                <label for="security-abroad-0">Охрана за рубежом</label>
+                <input type="text" class="form-control" name="security-abroad" required>
+                <div class="new-security-form">
+                </div>
+                <button type="button" class="btn btn-primary mt-3" id="add-security-btn" onclick="addSecurity()">Добавить поле</button>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Дата следующей выплаты пошлины</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="дд.мм.гггг." required>
+                <label for="next-payment">Дата следующей выплаты пошлины</label>
+                <input type="text" class="form-control" name="next-payment" placeholder="дд.мм.гггг." required>
             </div>
-            <button type="submit" class="btn btn-primary">Добавить документ</button>
+            <button type="submit" class="btn btn-primary mb-5">Добавить документ</button>
         </form>
     </div>
+    <div class="mt-3">
+    {% include 'mainapp/includes/messaging.html' %}   
+  </div>
 </body>
 <script src="{% static 'js/jquery-3.7.0.min.js' %}" ></script>
-<script src="{% static 'js/main.js' %}" ></script>
+<script src="{% static 'js/forms.js' %}" ></script>
 
 </html>
