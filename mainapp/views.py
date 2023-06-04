@@ -31,3 +31,8 @@ def feel_bd(data):
                                       division=units[i], \
                                       post=posts[i])
     # countries
+    security_abroad = data.getlist('security-abroad')
+    for i in range(len(security_abroad)):
+        Countries.objects.get_or_create(co_name=security_abroad[i])
+    #e.t.c.
+    
