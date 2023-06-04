@@ -26,11 +26,8 @@ def feel_bd(data):
     names = data.getlist('authors-name')
     units = data.getlist('authors-unit')
     posts = data.getlist('authors-post')
-    # add uniqueness check     
     for i in range(len(names)):
-        author = Authors()
-
-        author.author = names[i]
-        author.division = units[i]
-        author.post = posts[i]
-        author.save()
+        Authors.objects.get_or_create(author=names[i], \
+                                      division=units[i], \
+                                      post=posts[i])
+    # countries
