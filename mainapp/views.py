@@ -20,9 +20,8 @@ def new_doc(request: HttpRequest):
         return redirect('/')
     return render(request, 'mainapp/new-doc.html')
 
-
 def date_handler(date):
-    ...
+    return date[::-1]
 
 def feel_bd(data):
     data_id = {
