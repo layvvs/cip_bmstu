@@ -73,13 +73,13 @@ def feel_bd(data):
     exclusive_rights = data["type-of-contract"]
     data_id["ExclusiveRights"] = ExclusiveRights. \
                                  objects. \
-                                 get_or_create(exclusive_rights=exclusive_rights)[0]
+                                 get(exclusive_rights=exclusive_rights)
 
     #official or initiative
     serive_proactive = data["select-service-proactive"] # Добавить в главную таблицу
     data_id["OfficialOrInitiative"] = OfficialOrInitiative. \
                                        objects. \
-                                       get_or_create(official_or_initiative=serive_proactive)[0]
+                                       get(official_or_initiative=serive_proactive)
 
 
     #IPCARHCIVE
@@ -118,7 +118,7 @@ def feel_bd(data):
         initiative = InitiativePatentTable()
         initiative.p_in_id_archive = data_id["IPCARCHIVE"]
         initiative.in_contract_num = data["contract-number"]
-        initiative.in_contract_date = data["contract-date"]
+        initiative.in_contract_date = date_handler(data["contract-date"])
         initiative.save()
 
     # AWARD and Agreements
@@ -132,7 +132,7 @@ def feel_bd(data):
         award = Award()
 
         if exclusive_rights == "Договор отчуждения":
-            agreements.ag_f_id_archive = data_id["IPCARCHIVE"]
+            agreements.ag_p_id_archive = data_id["IPCARCHIVE"]
             agreements.ag_date_of_conclusion = date_of_conclusion
             agreements.ag_date_of_registration = date_of_registration  
             agreements.ag_num = number
@@ -143,11 +143,12 @@ def feel_bd(data):
             award.award_sum = payment
             award.award_term = None
             award.awa_order_num = number
+            award.save()
         elif exclusive_rights == "Лицензионный договор":
             due_date = date_handler(data["due-date"])
             license_agreement = data["license-agreement"]
 
-            agreements.ag_f_id_archive = data_id["IPCARCHIVE"]
+            agreements.ag_p_id_archive = data_id["IPCARCHIVE"]
             agreements.ag_date_of_conclusion = date_of_conclusion
             agreements.ag_date_of_registration = date_of_registration
             agreements.ag_num = number
@@ -158,28 +159,32 @@ def feel_bd(data):
             award.award_sum = payment
             award.award_term = due_date
             award.awa_order_num = number
+            award.save()
         
+        ConnectingAwards.objects.create(f_id_award=award, f_id_archive=data_id["IPCARCHIVE"])
 
+    #authors
+    names = data.getlist("authors-name")
+    units = data.getlist("authors-unit")
+    posts = data.getlist("authors-post")
+    for i in range(len(names)):
+        temp = Authors.objects.get_or_create(author=names[i], \
+                                      division=units[i], \
+                                      post=posts[i])
+        data_id["Authors"].append(temp[0])
 
+    # countries
+    security_abroad = data.getlist("security-abroad")
+    countries = []
+    for i in range(len(security_abroad)):
+        data_id["Countries"].append(Countries. \
+                                    objects. \
+                                    get_or_create(co_name=security_abroad[i])[0])
 
-    # #ДОБАВЛЯТЬ В СЛОВАРЬ ОБЪЕКТЫ, А НЕ АЙДИ(ПОСМОТРЕТЬ ЕЩЕ)
-    # #authors
-    # names = data.getlist("authors-name")
-    # units = data.getlist("authors-unit")
-    # posts = data.getlist("authors-post")
-    # for i in range(len(names)):
-    #     temp = Authors.objects.get_or_create(author=names[i], \
-    #                                   division=units[i], \
-    #                                   post=posts[i])
-    #     data_id["Authors"].append(temp[0].p_id_author)
-
-    # # countries
-    # security_abroad = data.getlist("security-abroad")
-    # countries = []
-    # for i in range(len(security_abroad)):
-    #     data_id["Countries"].append(Countries. \
-    #                                 objects. \
-    #                                 get_or_create(co_name=security_abroad[i])[0].p_id_countries)
-
-    # # CONNECTING TABLES
-    # # Agreements
+    for author in data_id["Authors"]:
+        ConnectingAuthors.objects.create(f_id_archive=data_id["IPCARCHIVE"], f_id_author=author)
+    
+    for country in data_id["Countries"]:
+        ConnectingCountries.objects.create(f_id_archive=data_id["IPCARCHIVE"], f_id_countries=country)
+    
+    data_id.clear()

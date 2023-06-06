@@ -14,11 +14,11 @@ class Award(models.Model):
 
 
 class Agreements(models.Model):
-    ag_f_id_archive = models.ForeignKey('IpcArchive', models.DO_NOTHING, db_column='AG_F_ID_Archive')  # Field name made lowercase.
+    ag_p_id_archive = models.OneToOneField('IpcArchive', models.DO_NOTHING, db_column='AG_P_ID_Archive', primary_key=True)  # Field name made lowercase.
     ag_date_of_conclusion = models.DateField(db_column='AG_Date_Of_Conclusion')  # Field name made lowercase.
     ag_num = models.IntegerField(db_column='AG_Num')  # Field name made lowercase.
     ag_date_of_registration = models.DateField(db_column='AG_Date_Of_Registration')  # Field name made lowercase.
-    authorized_capital = models.CharField(db_column='Authorized_Capital', max_length=4)  # Field name made lowercase.
+    authorized_capital = models.CharField(db_column='Authorized_Capital', max_length=4, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -48,6 +48,7 @@ class Countries(models.Model):
 class ConnectingAuthors(models.Model):
     f_id_archive = models.ForeignKey('IpcArchive', models.DO_NOTHING, db_column='F_ID_Archive')  # Field name made lowercase.
     f_id_author = models.ForeignKey(Authors, models.DO_NOTHING, db_column='F_ID_Author')  # Field name made lowercase.
+    p_id_cauthors = models.AutoField(db_column='P_ID_CAuthors', primary_key=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -57,6 +58,7 @@ class ConnectingAuthors(models.Model):
 class ConnectingAwards(models.Model):
     f_id_award = models.ForeignKey(Award, models.DO_NOTHING, db_column='F_ID_Award')  # Field name made lowercase.
     f_id_archive = models.ForeignKey('IpcArchive', models.DO_NOTHING, db_column='F_ID_Archive')  # Field name made lowercase.
+    p_id_ca = models.AutoField(db_column='P_ID_CA', primary_key=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -66,6 +68,7 @@ class ConnectingAwards(models.Model):
 class ConnectingCountries(models.Model):
     f_id_archive = models.ForeignKey('IpcArchive', models.DO_NOTHING, db_column='F_ID_Archive')  # Field name made lowercase.
     f_id_countries = models.ForeignKey(Countries, models.DO_NOTHING, db_column='F_ID_Countries')  # Field name made lowercase.
+    p_id_cc = models.AutoField(db_column='P_ID_CC', primary_key=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
