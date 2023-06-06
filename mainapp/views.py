@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
 
-
 def main_index(request: HttpRequest):
     counter = IpcArchive.objects.count()
     context = {
@@ -21,17 +20,15 @@ def new_doc(request: HttpRequest):
     return render(request, 'mainapp/new-doc.html')
 
 def date_handler(date):
-    return date[::-1]
+    return date[6:] + '-' + date[3:5] + '-' + date[:2]
 
 def feel_bd(data):
     data_id = {
         "Authors": [],
         "Countries": [],
         "ObjectType": "",
-        "OfficialOrInitiative": [],
-        "OfficialPatentTable": [],
-        "InitiativePatentTable": [],
-        "Agreements": [],
+        "OfficialOrInitiative": "",
+        "ExclusiveRights": "",
         "AWARD": [],
         "IPCARCHIVE": "",
     }
@@ -67,27 +64,105 @@ def feel_bd(data):
         case "Программа для ЭВМ и БД без регистрации":
             type_of_sec_doc = 3
             classification = ""
-    temp = ObjectType.objects.get_or_create(p_id_object_type=1, object_type=type_of_object, 
+    temp = ObjectType.objects.get_or_create(object_type=type_of_object, 
                                   classifications=classification, 
                                   f_id_type_of_security_doc=TypeOfSecurityDoc.objects.get(p_id_type_of_security_doc=type_of_sec_doc))
-    data_id["ObjectType"] = temp
+    data_id["ObjectType"] = temp[0]
+
+    # Exclusive_Rigths
+    exclusive_rights = data["type-of-contract"]
+    data_id["ExclusiveRights"] = ExclusiveRights. \
+                                 objects. \
+                                 get_or_create(exclusive_rights=exclusive_rights)[0]
+
+    #official or initiative
+    serive_proactive = data["select-service-proactive"] # Добавить в главную таблицу
+    data_id["OfficialOrInitiative"] = OfficialOrInitiative. \
+                                       objects. \
+                                       get_or_create(official_or_initiative=serive_proactive)[0]
+
 
     #IPCARHCIVE
     temp = IpcArchive.objects.get_or_create(f_id_object_type=data_id["ObjectType"], 
                                             security_doc_num=data["protection-document-number"], 
                                             primary_name=data["primary-name"], 
                                             application_num=data["application-number"], 
-                                            application_data=data["application-date"], 
+                                            application_data=date_handler(data["application-date"]), 
                                             final_name=data["final-name"], 
                                             responsible_person=data["responsible-person"], 
                                             accounting_in_is=data["accounting"], 
-                                            date_reg_is="2002-02-25", # заглушка 
-                                            next_poshlina_date=data["next-payment"],
-                                            f_official_or_initiative=1, # заглушка 
-                                            f_id_exclusive_rights=2) # заглушка 
-    data_id["IPCARCHIVE"] = temp
+                                            date_reg_is=date_handler(data["date-of-security-document"]), 
+                                            next_poshlina_date=date_handler(data["next-payment"]),
+                                            f_official_or_initiative=data_id["OfficialOrInitiative"], 
+                                            f_id_exclusive_rights=data_id["ExclusiveRights"]) 
+    data_id["IPCARCHIVE"] = temp[0]
+    print(data_id)
 
-    # ДОБАВЛЯТЬ В СЛОВАРЬ ОБЪЕКТЫ, А НЕ АЙДИ
+    #official or initiative 2
+    if serive_proactive == "Служебный":
+        service = OfficialPatentTable()
+        off_patent_type = ""
+        match data["select-type-service"]:
+            case "Распоряжение":
+                off_patent_type = 1
+            case "Приказ":
+                off_patent_type = 2
+            case "Служебное задание":
+                off_patent_type = 3
+        service.p_of_id_archive = data_id["IPCARCHIVE"]
+        service.f_id_official_patent_type = OfficialPatentType.objects.get(p_id_official_patent_type=off_patent_type)
+        service.of_award_order_num = data["order-number"]
+        service.of_award_contract_num = data["contract-number"]
+        service.save()
+    else:
+        initiative = InitiativePatentTable()
+        initiative.p_in_id_archive = data_id["IPCARCHIVE"]
+        initiative.in_contract_num = data["contract-number"]
+        initiative.in_contract_date = data["contract-date"]
+        initiative.save()
+
+    # AWARD and Agreements
+    if exclusive_rights != "Нет":
+        date_of_conclusion = date_handler(data["date-of-conclusion"])
+        number = data["number"]
+        date_of_registration = date_handler(data["date-of-registration"])
+        payment = int(data["payment"])
+        date_of_payment = date_handler(data["date-of-payment"])
+        agreements = Agreements()
+        award = Award()
+
+        if exclusive_rights == "Договор отчуждения":
+            agreements.ag_f_id_archive = data_id["IPCARCHIVE"]
+            agreements.ag_date_of_conclusion = date_of_conclusion
+            agreements.ag_date_of_registration = date_of_registration  
+            agreements.ag_num = number
+            agreements.authorized_capital = ""
+            agreements.save()
+
+            award.date_of_award = date_of_payment
+            award.award_sum = payment
+            award.award_term = None
+            award.awa_order_num = number
+        elif exclusive_rights == "Лицензионный договор":
+            due_date = date_handler(data["due-date"])
+            license_agreement = data["license-agreement"]
+
+            agreements.ag_f_id_archive = data_id["IPCARCHIVE"]
+            agreements.ag_date_of_conclusion = date_of_conclusion
+            agreements.ag_date_of_registration = date_of_registration
+            agreements.ag_num = number
+            agreements.authorized_capital = license_agreement
+            agreements.save()
+
+            award.date_of_award = date_of_payment
+            award.award_sum = payment
+            award.award_term = due_date
+            award.awa_order_num = number
+        
+
+
+
+    # #ДОБАВЛЯТЬ В СЛОВАРЬ ОБЪЕКТЫ, А НЕ АЙДИ(ПОСМОТРЕТЬ ЕЩЕ)
     # #authors
     # names = data.getlist("authors-name")
     # units = data.getlist("authors-unit")
@@ -106,31 +181,5 @@ def feel_bd(data):
     #                                 objects. \
     #                                 get_or_create(co_name=security_abroad[i])[0].p_id_countries)
 
-    # #official or initiative
-    # serive_proactive = data["select-service-proactive"] # Добавить в главную таблицу
-    # data_id["OfficialOrInitiative"].append(OfficialOrInitiative. \
-    #                                        objects. \
-    #                                        get_or_create(OfficialPatentType=serive_proactive)[0].p_id_official_or_initiative)
-    # if serive_proactive == "Служебный":
-    #     service = OfficialPatentTable()
-    #     off_patent_type = ""
-    #     match data["select-type-service"]:
-    #         case "Распоряжение":
-    #             off_patent_type = 1
-    #         case "Приказ":
-    #             off_patent_type = 2
-    #         case "Служебное задание":
-    #             off_patent_type = 3
-    #     service.f_id_official_patent_type = off_patent_type
-    #     service.of_award_order_num = data["order-number"]
-    #     service.of_award_contract_num = data["contract-number"]
-    #     service.save()
-    #     data_id["OfficialPatentTable"].append(service.p_of_id_archive)
-    # else:
-    #     initiative = InitiativePatentTable()
-    #     initiative.in_contract_num = data["contract-number"]
-    #     initiative.in_contract_date = data["contract-date"]
-    #     initiative.save()
-    #     data_id["InitiativePatentTable"].append(initiative.p_in_id_archive)
-
-
+    # # CONNECTING TABLES
+    # # Agreements

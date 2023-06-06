@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class Award(models.Model):
     id_award = models.BigAutoField(db_column='ID_AWARD', primary_key=True)  # Field name made lowercase.
@@ -74,8 +73,8 @@ class ConnectingCountries(models.Model):
 
 
 class ExclusiveRights(models.Model):
-    p_id_exclusive_rights = models.OneToOneField('IpcArchive', models.DO_NOTHING, db_column='P_ID_Exclusive_Rights', primary_key=True)  # Field name made lowercase.
     exclusive_rights = models.TextField(db_column='Exclusive_Rights', blank=True, null=True)  # Field name made lowercase.
+    p_id_exclusive_rights = models.AutoField(db_column='P_ID_Exclusive_Rights', primary_key=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -91,9 +90,9 @@ class IpcArchive(models.Model):
     application_data = models.DateField(db_column='Application_Data')  # Field name made lowercase.
     final_name = models.TextField(db_column='Final_Name')  # Field name made lowercase.
     responsible_person = models.TextField(db_column='Responsible_Person')  # Field name made lowercase.
-    f_official_or_initiative = models.SmallIntegerField(db_column='F_Official_or_Initiative', unique=True)  # Field name made lowercase.
+    f_official_or_initiative = models.OneToOneField('OfficialOrInitiative', models.DO_NOTHING, db_column='F_Official_or_Initiative')  # Field name made lowercase.
     accounting_in_is = models.CharField(db_column='Accounting_in_IS', max_length=4)  # Field name made lowercase.
-    f_id_exclusive_rights = models.SmallIntegerField(db_column='F_ID_Exclusive_Rights', unique=True)  # Field name made lowercase.
+    f_id_exclusive_rights = models.OneToOneField(ExclusiveRights, models.DO_NOTHING, db_column='F_ID_Exclusive_Rights')  # Field name made lowercase.
     date_reg_is = models.DateField(db_column='Date_Reg_IS')  # Field name made lowercase.
     next_poshlina_date = models.DateField(db_column='Next_Poshlina_Date', blank=True, null=True)  # Field name made lowercase.
 
@@ -113,10 +112,10 @@ class InitiativePatentTable(models.Model):
 
 
 class ObjectType(models.Model):
-    p_id_object_type = models.SmallIntegerField(db_column='P_ID_Object_Type', primary_key=True)  # Field name made lowercase.
     object_type = models.CharField(db_column='Object_Type', max_length=40)  # Field name made lowercase.
     f_id_type_of_security_doc = models.ForeignKey('TypeOfSecurityDoc', models.DO_NOTHING, db_column='F_ID_Type_of_Security_Doc')  # Field name made lowercase.
     classifications = models.TextField(db_column='Classifications', blank=True, null=True)  # Field name made lowercase.
+    p_id_object_type = models.AutoField(db_column='P_ID_Object_Type', primary_key=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -144,8 +143,8 @@ class OfficialPatentType(models.Model):
 
 
 class OfficialOrInitiative(models.Model):
-    p_id_official_or_initiative = models.OneToOneField(IpcArchive, models.DO_NOTHING, db_column='P_ID_Official_or_Initiative', primary_key=True)  # Field name made lowercase.
     official_or_initiative = models.TextField(db_column='Official_or_Initiative')  # Field name made lowercase.
+    p_id_official_or_initiative = models.AutoField(db_column='P_ID_Official_or_Initiative', primary_key=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
