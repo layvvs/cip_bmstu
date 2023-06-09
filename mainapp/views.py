@@ -4,9 +4,10 @@ from .models import *
 from django.contrib import messages
 
 def main_index(request: HttpRequest):
-    counter = IpcArchive.objects.count()
+    record = IpcArchive.objects
     context = {
-        "counter": counter
+        "counter": record.count(),
+        "all_records": record.all(),
     }
     return render(request, 'mainapp/main-index.html', context)
 
@@ -49,7 +50,7 @@ def feel_bd(data):
         case "Программа для ЭВМ":
             type_of_sec_doc = 2 
             classification = ""
-        case "База Данных":
+        case "База данных":
             type_of_sec_doc = 2
             classification = ""
         case "Ноу-хау":
