@@ -20,14 +20,6 @@ def new_doc(request: HttpRequest):
         return redirect('/')
     return render(request, 'mainapp/new-doc.html')
 
-def show_document(request: HttpRequest, id):
-    document = IpcArchive.objects.get(id_archive=id)
-
-    context = {
-        'document': document
-    }
-    return render(request, 'mainapp/show-document.html', context)
-
 def date_handler_input(date):
     return date[6:] + '-' + date[3:5] + '-' + date[:2]
 

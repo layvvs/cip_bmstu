@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
     'mainapp.apps.MainappConfig',
     'authapp.apps.AuthappConfig',
+    'documentapp.apps.DocumentappConfig',
 
     'crispy_forms',
     'widget_tweaks',
