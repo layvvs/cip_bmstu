@@ -20,8 +20,19 @@ def new_doc(request: HttpRequest):
         return redirect('/')
     return render(request, 'mainapp/new-doc.html')
 
-def date_handler(date):
+def show_document(request: HttpRequest, id):
+    document = IpcArchive.objects.get(id_archive=id)
+
+    context = {
+        'document': document
+    }
+    return render(request, 'mainapp/show-document.html', context)
+
+def date_handler_input(date):
     return date[6:] + '-' + date[3:5] + '-' + date[:2]
+
+def date_handler_output(date):
+    return date[8:] + '-' + date[5:7] + '-' + date[0:4]
 
 def feel_bd(data):
     data_id = {
@@ -88,12 +99,12 @@ def feel_bd(data):
                                             security_doc_num=data["protection-document-number"], 
                                             primary_name=data["primary-name"], 
                                             application_num=data["application-number"], 
-                                            application_data=date_handler(data["application-date"]), 
+                                            application_data=date_handler_input(data["application-date"]), 
                                             final_name=data["final-name"], 
                                             responsible_person=data["responsible-person"], 
                                             accounting_in_is=data["accounting"], 
-                                            date_reg_is=date_handler(data["date-of-security-document"]), 
-                                            next_poshlina_date=date_handler(data["next-payment"]),
+                                            date_reg_is=date_handler_input(data["date-of-security-document"]), 
+                                            next_poshlina_date=date_handler_input(data["next-payment"]),
                                             f_official_or_initiative=data_id["OfficialOrInitiative"], 
                                             f_id_exclusive_rights=data_id["ExclusiveRights"]) 
     data_id["IPCARCHIVE"] = temp[0]
@@ -119,16 +130,16 @@ def feel_bd(data):
         initiative = InitiativePatentTable()
         initiative.p_in_id_archive = data_id["IPCARCHIVE"]
         initiative.in_contract_num = data["contract-number"]
-        initiative.in_contract_date = date_handler(data["contract-date"])
+        initiative.in_contract_date = date_handler_input(data["contract-date"])
         initiative.save()
 
     # AWARD and Agreements
     if exclusive_rights != "Нет":
-        date_of_conclusion = date_handler(data["date-of-conclusion"])
+        date_of_conclusion = date_handler_input(data["date-of-conclusion"])
         number = data["number"]
-        date_of_registration = date_handler(data["date-of-registration"])
+        date_of_registration = date_handler_input(data["date-of-registration"])
         payment = int(data["payment"])
-        date_of_payment = date_handler(data["date-of-payment"])
+        date_of_payment = date_handler_input(data["date-of-payment"])
         agreements = Agreements()
         award = Award()
 
@@ -146,7 +157,7 @@ def feel_bd(data):
             award.awa_order_num = number
             award.save()
         elif exclusive_rights == "Лицензионный договор":
-            due_date = date_handler(data["due-date"])
+            due_date = date_handler_input(data["due-date"])
             license_agreement = data["license-agreement"]
 
             agreements.ag_p_id_archive = data_id["IPCARCHIVE"]
