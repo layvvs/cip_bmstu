@@ -10,6 +10,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-{{ document.primary_name }}
+  <div class="container">
+      <div class="item border border-left-0 border-right-0 mt-3">
+            <p class="ml-2 text-primary">Вид объекта <br><span class="text-dark lead">{{ obj_type }} </span></p>
+            <p class="ml-2 text-primary">Вид охранного документа <br><span class="text-dark lead">{{ sec_type }} </span></p>
+            <p class="mt-3 ml-2 text-primary">Номер охранного документа <br><span class="text-dark lead">{{ document.security_doc_num }}</span></p>
+            <p class="ml-2 text-primary">Первичное Наименование<br><span class="text-dark lead">{{ document.primary_name }} </span></p>
+            <p class="ml-2 text-primary">Номер заявки<br><span class="text-dark lead">{{ document.application_num }} </span></p>
+            <p class="ml-2 text-primary">Дата заявки<br><span class="text-dark lead">{{ document.application_data.isoformat }} </span></p>
+            <p class="ml-2 text-primary">Итоговое наименование<br><span class="text-dark lead">{{ document.final_name  }} </span></p>
+            <p class="ml-2 text-primary">Дата охранного документа <br><span class="text-dark lead">{{ document.date_reg_is.isoformat }} </span></p>
+            <p class="ml-2 text-primary">Классификация <br><span class="text-dark lead">{{ classification }} </span></p>
+            <p class="ml-2 text-primary">Авторы<br><span class="text-dark lead"></span></p>
+            {% for author in authors %}
+                <div class="ml-2">
+                    <ul>
+                        <p><li class="text-primary">ФИО</li><span class="text-dark lead">{{ author.author }} </span></p>
+                        <p><li class="text-primary">Подразделение</li><span class="text-dark lead">{{ author.division }} </span></p>
+                        <p><li class="text-primary">Должность</li><span class="text-dark lead">{{ author.post }} </span></p>
+                    </ul>
+                </div>
+            {% endfor %}
+            <p class="ml-2 text-primary">Ответсвтенное лицо<br><span class="text-dark lead">{{ document.responsible_person }} </span></p>
+            {% if document.f_official_or_initiative.official_or_initiative == "Служебный"%}
+                <div class="ml-2">
+                    <ul>
+                        <p><li class="text-primary">Служебный</li><span class="text-dark lead">{{ off_or_init.f_id_official_patent_type.official_patent_type }} </span></p>
+                        <p><li class="text-primary">Номер приказа</li><span class="text-dark lead">{{ off_or_init.of_award_order_num }} </span></p>
+                        <p><li class="text-primary">Номер договора</li><span class="text-dark lead">{{ off_or_init.of_award_contract_num }} </span></p>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="ml-2">
+                    <ul>
+                        <p><li class="text-primary">Инициативный</li></p>
+                        <p><li class="text-primary">Номер приказа</li><span class="text-dark lead">{{ off_or_init.in_contract_num }} </span></p>
+                        <p><li class="text-primary">Номер договора</li><span class="text-dark lead">{{ off_or_init.in_contract_date.isoformat }} </span></p>
+                    </ul>
+                </div>
+            {% endif %}
+            <p class="ml-2 text-primary">Учет в ИС<br><span class="text-dark lead text-nowrap">{{ document.accounting_in_is }}</span></p>
+            <p class="ml-2 text-primary">Распоряжение исключительными правами ДОДЕЛАТЬ<br><span class="text-dark lead">{{ document.f_id_exclusive_rights.exclusive_rights }} </span></p>
+            <p class="ml-2 text-primary">Выплата вознаграждений авторам за распоряжение?!?!?<br><span class="text-dark lead">{{ document }} </span></p>
+            <p class="ml-2 text-primary">Охрана за рубежом<br></p>
+            {% for country in countries %}
+                <div class="ml-2">
+                    <ul>
+                        <p><li class="text-primary">Охраняется</li><span class="text-dark lead">{{ country.co_name }} </span></p>
+                    </ul>
+                </div>
+            {% endfor %}
+            <p class="ml-2 text-primary">Дата выплаты следующей пошлины<br><span class="text-dark lead">{{ document.next_poshlina_date.isoformat }} </span></p>
+
+      </div>
+  </div>
 </body>
 </html>

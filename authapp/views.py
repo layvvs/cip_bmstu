@@ -38,7 +38,6 @@ def login_view(request: HttpRequest):
 
 def logout_view(request: HttpRequest):
     logout(request)
-    messages.success(request, 'Вы успешно вышли.')
     return redirect('/')
 
 def activate(request, uidb64, token):

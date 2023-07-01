@@ -2,15 +2,18 @@ from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url="/authapp/login/")
 def main_index(request: HttpRequest):
-    record = IpcArchive.objects
+    records = IpcArchive.objects.all()
     context = {
-        "counter": record.count(),
-        "all_records": record.all(),
+        "counter": records.count(),
+        "all_records": records,
     }
     return render(request, 'mainapp/main-index.html', context)
 
+@login_required(login_url="/authapp/login/")
 def new_doc(request: HttpRequest):
     if request.method == "POST":
         data = request.POST
