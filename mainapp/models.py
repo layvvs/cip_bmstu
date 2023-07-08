@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Award(models.Model):
     id_award = models.BigAutoField(db_column='ID_AWARD', primary_key=True)  # Field name made lowercase.
     date_of_award = models.DateField(db_column='Date_of_Award')  # Field name made lowercase.
@@ -93,11 +92,13 @@ class IpcArchive(models.Model):
     application_data = models.DateField(db_column='Application_Data')  # Field name made lowercase.
     final_name = models.TextField(db_column='Final_Name')  # Field name made lowercase.
     responsible_person = models.TextField(db_column='Responsible_Person')  # Field name made lowercase.
-    f_official_or_initiative = models.OneToOneField('OfficialOrInitiative', models.DO_NOTHING, db_column='F_Official_or_Initiative')  # Field name made lowercase.
+    f_official_or_initiative = models.ForeignKey('OfficialOrInitiative', models.DO_NOTHING, db_column='F_Official_or_Initiative')  # Field name made lowercase.
     accounting_in_is = models.CharField(db_column='Accounting_in_IS', max_length=4)  # Field name made lowercase.
-    f_id_exclusive_rights = models.OneToOneField(ExclusiveRights, models.DO_NOTHING, db_column='F_ID_Exclusive_Rights')  # Field name made lowercase.
+    f_id_exclusive_rights = models.ForeignKey(ExclusiveRights, models.DO_NOTHING, db_column='F_ID_Exclusive_Rights')  # Field name made lowercase.
     date_reg_is = models.DateField(db_column='Date_Reg_IS')  # Field name made lowercase.
     next_poshlina_date = models.DateField(db_column='Next_Poshlina_Date', blank=True, null=True)  # Field name made lowercase.
+    royalty_payment = models.IntegerField(db_column='Royalty_Payment', blank=True, null=True)  # Field name made lowercase.
+    security_document_payment = models.TextField(db_column='Security_Document_Payment', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

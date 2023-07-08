@@ -40,6 +40,17 @@
                 <input type="text" class="form-control" name="protection-document-number" required>
             </div>
             <div class="form-group">
+                <label for="inlineRadio1">Прошла ли выплата при получении охранного документа?</label> <br> 
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sec-doc-pay" id="inlineRadio1" value="Да" checked>
+                    <label class="form-check-label" for="inlineRadio1">Да</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sec-doc-pay" id="inlineRadio2" value="Нет">
+                    <label class="form-check-label" for="inlineRadio2">Нет</label>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="date-of-security-document">Дата охранного документа</label>
                 <input type="text" class="form-control" id="date1" name="date-of-security-document" placeholder="дд-мм-гггг" required>
             </div>

@@ -88,7 +88,7 @@ $("#type-of-contract").on('click', function(ev){
                 <input type="text" class="form-control mt-1" name="number" placeholder="Номер" required>\
                 <input type="text" class="form-control mt-1" id="date6" name="date-of-registration" placeholder="Дата регистрации" required>\
                 <input type="text" class="form-control mt-1" id="date7" name="due-date" placeholder="Срок оплаты" required>\
-                <input type="text" class="form-control mt-1" name="payment" placeholder="Оплата" required>\
+                <input type="text" class="form-control mt-1" name="payment" placeholder="Сумма оплаты" required>\
                 <input type="text" class="form-control mt-1" id="date8" name="date-of-payment" placeholder="Дата оплаты" required>\
                 <label for="license-agreement-1">Использование в уставном капитале</label> <br>\
                 <div class="form-check form-check-inline">\
@@ -108,7 +108,7 @@ $("#type-of-contract").on('click', function(ev){
                 <input type="text" class="form-control mt-1" id="date9" name="date-of-conclusion" placeholder="Дата заключения" required>\
                 <input type="text" class="form-control mt-1" name="number" placeholder="Номер" required>\
                 <input type="text" class="form-control mt-1" id="date10" name="date-of-registration" placeholder="Дата регистрации" required>\
-                <input type="text" class="form-control mt-1" name="payment" placeholder="Оплата" required>\
+                <input type="text" class="form-control mt-1" name="payment" placeholder="Сумма оплаты" required>\
                 <input type="text" class="form-control mt-1" id="date11" name="date-of-payment" placeholder="Дата оплаты" required>\
             </div>'
         );

@@ -96,6 +96,8 @@ def feel_bd(data):
                                             application_num=data["application-number"], 
                                             application_data=date_handler_input(data["application-date"]), 
                                             final_name=data["final-name"], 
+                                            royalty_payment=data['reward-payment'],
+                                            security_document_payment=data['sec-doc-pay'],
                                             responsible_person=data["responsible-person"], 
                                             accounting_in_is=data["accounting"], 
                                             date_reg_is=date_handler_input(data["date-of-security-document"]), 
