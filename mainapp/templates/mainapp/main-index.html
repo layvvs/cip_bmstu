@@ -53,10 +53,9 @@
           <p class="mt-3 ml-2 text-primary">Номер охранного документа <br><span class="text-dark lead">{{ doc.security_doc_num }}</span></p>
           <p class="ml-2 text-primary">Наименование <br><span class="text-dark lead text-nowrap">{{ doc.final_name }}</span></p>
           <p class="ml-2 text-primary">Дата охранного документа <br><span class="text-dark lead">{{ doc.date_reg_is.isoformat }} </span></p>
-          <p class="ml-2"><a target="_blank" href="document/{{doc.id_archive}}" class="text-dark">Показать документ<img width="16" height="16" src="{% static 'mainapp/image/arrow-up-right.svg' %}" alt="arrow"></a></p>
+          <p class="ml-2"><a target="" href="document/{{doc.id_archive}}" class="text-dark">Показать документ<img width="16" height="16" src="{% static 'mainapp/image/arrow-up-right.svg' %}" alt="arrow"></a></p>
       </div>
     {% endfor %}
   </div>
-
 </body>
 </html>

@@ -26,9 +26,6 @@ def new_doc(request: HttpRequest):
 def date_handler_input(date):
     return date[6:] + '-' + date[3:5] + '-' + date[:2]
 
-def date_handler_output(date):
-    return date[8:] + '-' + date[5:7] + '-' + date[0:4]
-
 def feel_bd(data):
     data_id = {
         "Authors": [],

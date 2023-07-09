@@ -11,7 +11,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="item border border-left-0 border-right-0 mt-3">
+        <div class="d-flex flex-row-reverse mt-3">
+            <p class="text-right"><a href="{{document.id_archive}}/delete" class="text-danger">Удалить документ<img width="16" height="16" src="{% static 'mainapp/image/trash.svg' %}" alt="trash"></a></p>
+            <p class="text-right mr-3"><a href="{{document.id_archive}}/edit" class="text-success">Редактировать документ<img width="16" height="16" src="{% static 'mainapp/image/edit.svg' %}" alt="edit"></a></p>
+            <p class="text-left mr-3"><a href="/" class="text-primary">На главную<img width="16" height="16" src="{% static 'mainapp/image/back.svg' %}" alt="arrow"></a></p>
+        </div>
+        <div class="item border border-left-0 border-right-0 mt-1">
             <p class="ml-2 text-primary">Вид объекта <br><span class="text-dark lead">{{ obj_type }} </span></p>
             <p class="ml-2 text-primary">Вид охранного документа <br><span class="text-dark lead">{{ sec_type }} </span></p>
             <p class="mt-3 ml-2 text-primary">Номер охранного документа <br><span class="text-dark lead">{{ document.security_doc_num }}</span></p>
@@ -92,7 +97,6 @@
             {% endfor %}
             <p class="ml-2 text-primary">Дата выплаты следующей пошлины<br><span class="text-dark lead">{{ document.next_poshlina_date | date:"d-m-Y" }} </span></p>
         </div>
-        <p class="ml-2"><a href="{{document.id_archive}}/delete" class="text-danger">Удалить документ<img width="16" height="16" src="{% static 'mainapp/image/trash.svg' %}" alt="arrow"></a></p>
     </div>
 </body>
 </html>

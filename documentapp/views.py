@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from mainapp.views import date_handler_input
+
 
 def get_document_data(id: int) -> tuple:
     document = IpcArchive.objects.get(id_archive=id)
@@ -20,7 +22,6 @@ def get_document_data(id: int) -> tuple:
         off_or_init = InitiativePatentTable.objects.get(p_in_id_archive=id)
     
     return (document, obj_type, classification, sec_type, connecting_authors, connecting_countries, connecting_award, agreements, off_or_init)
-    
 
 @login_required(login_url="/authapp/login/")
 def show_document(request: HttpRequest, id: int):
@@ -56,3 +57,27 @@ def delete_document(request: HttpRequest, id):
 
     messages.success(request, "Документ успешно удален.")
     return redirect('/')
+
+@login_required(login_url="/authapp/login/")
+def edit_document(request: HttpRequest, id):
+    if request.method == "POST":
+        data = request.POST
+        document = IpcArchive.objects.get(id_archive=id)
+        document.primary_name = data['primary-name']
+        document.final_name = data['final-name']
+        document.security_doc_num = data['protection-document-number']
+        document.application_num = data['application-number']
+        document.application_data = date_handler_input(data['application-date'])
+        document.responsible_person = data['responsible-person']
+        document.accounting_in_is = data['accounting']
+        document.date_reg_is = date_handler_input(data['date-of-security-document'])
+        document.next_poshlina_date = date_handler_input(data['next-payment'])
+        document.royalty_payment = data['reward-payment']
+        document.security_document_payment = data['sec-doc-pay']
+        document.save()
+        return redirect(f'/document/{id}')
+    document = IpcArchive.objects.get(id_archive=id)
+    context = {
+        'document': document
+    }
+    return render(request, 'documentapp/edit-document.html', context)
