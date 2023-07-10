@@ -97,6 +97,11 @@
             {% endfor %}
             <p class="ml-2 text-primary">Дата выплаты следующей пошлины<br><span class="text-dark lead">{{ document.next_poshlina_date | date:"d-m-Y" }} </span></p>
         </div>
+        <div class="d-flex flex-row-reverse mt-2">
+            <p class="text-right"><a href="{{document.id_archive}}/delete" class="text-danger">Удалить документ<img width="16" height="16" src="{% static 'mainapp/image/trash.svg' %}" alt="trash"></a></p>
+            <p class="text-right mr-3"><a href="{{document.id_archive}}/edit" class="text-success">Редактировать документ<img width="16" height="16" src="{% static 'mainapp/image/edit.svg' %}" alt="edit"></a></p>
+            <p class="text-left mr-3"><a href="/" class="text-primary">На главную<img width="16" height="16" src="{% static 'mainapp/image/back.svg' %}" alt="arrow"></a></p>
+        </div>
     </div>
 </body>
 </html>
