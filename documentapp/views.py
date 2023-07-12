@@ -13,8 +13,15 @@ def get_document_data(id: int) -> tuple:
     sec_type = document.f_id_object_type.f_id_type_of_security_doc.type_of_security_doc
     connecting_authors = [item for item in ConnectingAuthors.objects.filter(f_id_archive=id)]
     connecting_countries = [item for item in ConnectingCountries.objects.filter(f_id_archive=id)]
-    connecting_award = ConnectingAwards.objects.get(f_id_archive=id)
-    agreements = Agreements.objects.get(ag_p_id_archive=id)
+
+    if ConnectingAwards.objects.filter(f_id_archive=id).exists():
+        connecting_award = ConnectingAwards.objects.get(f_id_archive=id)
+    else: 
+        connecting_award = None
+    if Agreements.objects.filter(ag_p_id_archive=id).exists():
+        agreements = Agreements.objects.get(ag_p_id_archive=id)
+    else:
+        agreements = None
 
     if document.f_official_or_initiative.official_or_initiative == "Служебный":
         off_or_init = OfficialPatentTable.objects.get(p_of_id_archive=id)

@@ -39,43 +39,53 @@
     </div>
   </div>
   <div class="container mt-3" id="search_bar">
-    <div class="pb-2 border-bottom">
-      <p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-          Поиск
-        </button>
-      </p>
+    <div>
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Поиск
+            </button>
+          </p>
+        </div>
+        <div class="form-group col-md-2 mt-2">
+          <p>
+          <a href="/">Очистить поиск</a>
+          </p>
+        </div>
+      </div>
+    </div>
       <div class="collapse" id="collapseExample">
         <div class="card card-body">
           <form>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputEmail4">Номер охранного документа</label>
-                <input type="text" class="form-control" id="inputEmail4">
+                <label for="sec-num-search">Номер охранного документа</label>
+                <input type="text" class="form-control" name="sec-num-search" id="sec-num-search">
               </div>
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Итоговое наименование</label>
-                <input type="text" class="form-control" id="inputPassword4">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputEmail4">Авторы</label>
-                <input type="text" class="form-control" id="inputEmail4">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Подразделение</label>
-                <input type="text" class="form-control" id="inputPassword4">
+                <label for="final-name-search">Итоговое наименование</label>
+                <input type="text" class="form-control" name="final-name-search" id="final-name-search">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputEmail4">Вид объекта</label>
-                <input type="text" class="form-control" id="inputEmail4">
+                <label for="authors-search">Авторы</label>
+                <input type="text" class="form-control" name="authors-search" id="authors-search">
               </div>
               <div class="form-group col-md-6">
-                <label for="inputPassword4">Номер завяки</label>
-                <input type="text" class="form-control" id="inputPassword4">
+                <label for="dep-search">Подразделение</label>
+                <input type="text" class="form-control" name="dep-search" id="dep-search">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="obj-type-search">Вид объекта</label>
+                <input type="text" class="form-control" name="obj-type-search" id="obj-type-search">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="app-num-search">Номер завяки</label>
+                <input type="text" class="form-control" name="app-num-search" id="app-num-search">
               </div>
             </div>
             <div class="form-row">
@@ -116,16 +126,16 @@
             </div>
             <div class="form-row">
               <div class="form-group col-md-3">
-                <input type="text" class="form-control" id="inputZip" placeholder="От">
+                <input type="text" class="form-control" name="from-app-date-search" id="date12" placeholder="От">
               </div>
               <div class="form-group col-md-3">
-                <input type="text" class="form-control" id="inputZip" placeholder="До">
+                <input type="text" class="form-control" name="to-app-date-search" id="date13" placeholder="До">
               </div>
               <div class="form-group col-md-3">
-                <input type="text" class="form-control" id="inputZip" placeholder="От">
+                <input type="text" class="form-control" name="from-sec-date-search" id="date14" placeholder="От">
               </div>
               <div class="form-group col-md-3">
-                <input type="text" class="form-control" id="inputZip" placeholder="До">
+                <input type="text" class="form-control" name="to-sec-date-search" id="date15" placeholder="До">
               </div>
             </div>
             <div class="form-group">
@@ -140,7 +150,7 @@
                   </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-block mt-2">Найти</button>
+          <button type="submit" name="search" id="search" class="btn btn-primary btn-block mt-2">Найти</button>
         </form>
       </div>
     </div>
@@ -160,4 +170,7 @@
     {% endfor %}
   </div>
 </body>
+<script src="{% static 'js/jquery-3.7.0.min.js' %}" ></script>
+<script src="{% static 'js/jquery.mask.min.js' %}" ></script>
+<script src="{% static 'js/forms.js' %}" ></script>
 </html>

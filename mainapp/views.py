@@ -4,13 +4,95 @@ from .models import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+def date_handler_input(date):
+    return date[6:] + '-' + date[3:5] + '-' + date[:2]
+
 @login_required(login_url="/authapp/login/")
 def main_index(request: HttpRequest):
-    records = IpcArchive.objects.all()
-    context = {
-        "counter": records.count(),
-        "all_records": records,
-    }
+    data = request.GET
+    if not data:
+        records = IpcArchive.objects.all()
+        context = {
+            "counter": records.count(),
+            "all_records": records,
+        }
+    else:
+        result_records = []      
+        auth_result_records = []
+        date_result_records = []
+        data_copy = {}
+        for key in data:
+            if data[key]:
+                data_copy.update({key: data[key]})
+        author_flag = 0
+        if data_copy.get('authors-search'):
+            by_authors = []
+            authors_que = data_copy.get('authors-search').split(', ')
+            if data_copy.get('authors-search') and data_copy.get('dep-search'):
+                authors = Authors.objects.filter(author__in=authors_que, division=data_copy['dep-search'])
+                if authors.exists():
+                    for author in authors:
+                        by_authors.append(author)
+            elif not data_copy.get('authors-search') and data_copy.get('dep-search'):
+                authors = Authors.objects.filter(division=data_copy['dep-search'])
+                if authors.exists():
+                    for author in authors:
+                        by_authors.append(author)
+            elif data_copy.get('authors-search') and not data_copy.get('dep-search'):
+                authors = Authors.objects.filter(author__in=authors_que)
+                if authors.exists():
+                    for author in authors:
+                        print(author.author)
+                        by_authors.append(author)
+            if by_authors:
+                author_flag = 1
+                filtered_archives = []
+                for author in by_authors:
+                    con_auth = ConnectingAuthors.objects.filter(f_id_author=author)
+                    if con_auth.exists():
+                        for elem in con_auth:
+                            filtered_archives.append(elem.f_id_archive)
+        date_app_flag = 0
+        if data_copy.get('from-app-date-search'):
+            date_from = date_handler_input(data_copy['from-app-date-search'])
+            date_to = date_handler_input(data_copy['to-app-date-search'])
+            date_app_flag = 1
+            date_app_arr = [date_from, date_to]
+            print(date_app_arr, 123)
+        date_sec_flag = 0
+        if data_copy.get('from-sec-date-search'):
+            date_from = date_handler_input(data_copy['from-sec-date-search'])
+            date_to = date_handler_input(data_copy['to-sec-date-search'])
+            date_sec_arr = [date_from, date_to]
+            date_sec_flag = 1
+        
+        if date_app_flag and date_sec_flag:
+            for record in IpcArchive.objects.filter(application_data__in=date_app_arr, date_reg_is__in=date_sec_arr):
+                date_result_records.append(record)
+        elif not date_app_flag and date_sec_flag:
+            for record in IpcArchive.objects.filter(date_reg_is__in=date_sec_arr):
+                date_result_records.append(record)
+        elif date_app_flag and not date_sec_flag:
+            for record in IpcArchive.objects.filter(application_data__in=date_app_arr):
+                date_result_records.append(record)
+                
+        if author_flag and filtered_archives:
+            for record in IpcArchive.objects.filter(id_archive__in=[id.id_archive for id in filtered_archives]):
+                    auth_result_records.append(record)
+        
+        if auth_result_records and date_result_records:
+            for elem in auth_result_records:
+                if elem in date_result_records:
+                    result_records.append(elem)
+        elif not auth_result_records and date_result_records:
+            result_records.extend(date_result_records)
+        elif auth_result_records and not date_result_records:
+            result_records.extend(auth_result_records)
+
+        context = {
+           "counter": len(result_records),
+          "all_records": result_records,
+        }
     return render(request, 'mainapp/main-index.html', context)
 
 @login_required(login_url="/authapp/login/")
@@ -22,9 +104,6 @@ def new_doc(request: HttpRequest):
         messages.success(request, "Документ успешно добавлен в базу.")
         return redirect('/')
     return render(request, 'mainapp/new-doc.html')
-
-def date_handler_input(date):
-    return date[6:] + '-' + date[3:5] + '-' + date[:2]
 
 def feel_bd(data):
     data_id = {
