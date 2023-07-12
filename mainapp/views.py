@@ -30,11 +30,14 @@ def main_index(request: HttpRequest):
             authors_que = data_copy.get('authors-search').split(', ')
             if data_copy.get('authors-search') and data_copy.get('dep-search'):
                 authors = Authors.objects.filter(author__in=authors_que, division=data_copy['dep-search'])
+                data_copy.pop('dep-search')
+
                 if authors.exists():
                     for author in authors:
                         by_authors.append(author)
             elif not data_copy.get('authors-search') and data_copy.get('dep-search'):
                 authors = Authors.objects.filter(division=data_copy['dep-search'])
+                data_copy.pop('dep-search')
                 if authors.exists():
                     for author in authors:
                         by_authors.append(author)
@@ -42,7 +45,6 @@ def main_index(request: HttpRequest):
                 authors = Authors.objects.filter(author__in=authors_que)
                 if authors.exists():
                     for author in authors:
-                        print(author.author)
                         by_authors.append(author)
             if by_authors:
                 author_flag = 1
@@ -52,19 +54,30 @@ def main_index(request: HttpRequest):
                     if con_auth.exists():
                         for elem in con_auth:
                             filtered_archives.append(elem.f_id_archive)
+
+            data_copy.pop('authors-search')
+
         date_app_flag = 0
         if data_copy.get('from-app-date-search'):
             date_from = date_handler_input(data_copy['from-app-date-search'])
             date_to = date_handler_input(data_copy['to-app-date-search'])
             date_app_flag = 1
             date_app_arr = [date_from, date_to]
-            print(date_app_arr, 123)
+            data_copy.pop('from-app-date-search')
+            data_copy.pop('to-app-date-search')
         date_sec_flag = 0
         if data_copy.get('from-sec-date-search'):
             date_from = date_handler_input(data_copy['from-sec-date-search'])
             date_to = date_handler_input(data_copy['to-sec-date-search'])
             date_sec_arr = [date_from, date_to]
             date_sec_flag = 1
+            data_copy.pop('from-sec-date-search')
+            data_copy.pop('to-sec-date-search')
+
+        if data_copy.get('f_official_or_initiative'):
+            data_copy['f_official_or_initiative'] = OfficialOrInitiative.objects.get(official_or_initiative=data_copy['f_official_or_initiative'])
+        if data_copy.get('f_id_exclusive_rights'):
+            data_copy['f_id_exclusive_rights'] = ExclusiveRights.objects.get(exclusive_rights=data_copy['f_id_exclusive_rights'])        
         
         if date_app_flag and date_sec_flag:
             for record in IpcArchive.objects.filter(application_data__in=date_app_arr, date_reg_is__in=date_sec_arr):
@@ -75,23 +88,44 @@ def main_index(request: HttpRequest):
         elif date_app_flag and not date_sec_flag:
             for record in IpcArchive.objects.filter(application_data__in=date_app_arr):
                 date_result_records.append(record)
-                
+
         if author_flag and filtered_archives:
             for record in IpcArchive.objects.filter(id_archive__in=[id.id_archive for id in filtered_archives]):
                     auth_result_records.append(record)
         
-        if auth_result_records and date_result_records:
-            for elem in auth_result_records:
-                if elem in date_result_records:
-                    result_records.append(elem)
-        elif not auth_result_records and date_result_records:
-            result_records.extend(date_result_records)
-        elif auth_result_records and not date_result_records:
-            result_records.extend(auth_result_records)
+        base_filter = [record for record in IpcArchive.objects.filter(**data_copy)]
+        print(data_copy)
+        print(base_filter)
+        print(auth_result_records)
+        print(date_result_records)
+        if base_filter and auth_result_records and date_result_records:
+            temp = []
+            for record in base_filter:
+                if record in auth_result_records:
+                    temp.append(record)
+            for record in temp:
+                if record in date_result_records:
+                    result_records.append(record)
+        elif not base_filter and auth_result_records and date_result_records:
+            result_records = [record if record in auth_result_records else [] for record in date_result_records]
+        elif base_filter and not auth_result_records and date_result_records:
+            result_records = [record if record in base_filter else [] for record in date_result_records]
+        elif base_filter and auth_result_records and not date_result_records:
+            result_records = [record if record in base_filter else [] for record in auth_result_records]
+        elif base_filter and not auth_result_records and not date_result_records:
+            result_records = base_filter
+        elif not base_filter and auth_result_records and not date_result_records:
+            result_records = auth_result_records
+        else:
+            result_records = date_result_records
+        final_records = []
+        for record in result_records:
+            if record:
+                final_records.append(record)
 
         context = {
-           "counter": len(result_records),
-          "all_records": result_records,
+           "counter": len(final_records),
+          "all_records": final_records,
         }
     return render(request, 'mainapp/main-index.html', context)
 

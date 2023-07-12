@@ -61,11 +61,11 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="sec-num-search">Номер охранного документа</label>
-                <input type="text" class="form-control" name="sec-num-search" id="sec-num-search">
+                <input type="text" class="form-control" name="security_doc_num" id="sec-num-search">
               </div>
               <div class="form-group col-md-6">
                 <label for="final-name-search">Итоговое наименование</label>
-                <input type="text" class="form-control" name="final-name-search" id="final-name-search">
+                <input type="text" class="form-control" name="final_name" id="final-name-search">
               </div>
             </div>
             <div class="form-row">
@@ -81,37 +81,37 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="obj-type-search">Вид объекта</label>
-                <input type="text" class="form-control" name="obj-type-search" id="obj-type-search">
+                <input type="text" class="form-control" name="f_id_object_type" id="obj-type-search">
               </div>
               <div class="form-group col-md-6">
                 <label for="app-num-search">Номер завяки</label>
-                <input type="text" class="form-control" name="app-num-search" id="app-num-search">
+                <input type="text" class="form-control" name="application_num" id="app-num-search">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                   <label for="inlineRadio1">Статус РИД</label> <br> 
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="rid-status" id="inlineRadio3" value="Служебный" checked>
+                      <input class="form-check-input" type="radio" name="f_official_or_initiative" id="inlineRadio3" value="Служебный" checked>
                       <label class="form-check-label" for="inlineRadio3">Служебный</label>
                   </div>
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="rid-status" id="inlineRadio4" value="Инициативный">
+                      <input class="form-check-input" type="radio" name="f_official_or_initiative" id="inlineRadio4" value="Инициативный">
                       <label class="form-check-label" for="inlineRadio4">Инициативный</label>
                   </div>
               </div>
               <div class="form-group ml-2">
                   <label for="inlineRadio1">Распоряжение исключительными правами</label> <br> 
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="exc-rights" id="inlineRadio5" value="Нет" checked>
+                      <input class="form-check-input" type="radio" name="f_id_exclusive_rights" id="inlineRadio5" value="Нет" checked>
                       <label class="form-check-label" for="inlineRadio5">Нет</label>
                   </div>
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="exc-rights" id="inlineRadio6" value="Договор отчуждения">
+                      <input class="form-check-input" type="radio" name="f_id_exclusive_rights" id="inlineRadio6" value="Договор отчуждения">
                       <label class="form-check-label" for="inlineRadio6">Договор отчуждения</label>
                   </div>
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="exc-rights" id="inlineRadio7" value="Лицензионный договор">
+                      <input class="form-check-input" type="radio" name="f_id_exclusive_rights" id="inlineRadio7" value="Лицензионный договор">
                       <label class="form-check-label" for="inlineRadio7">Лицензионный договор</label>
                   </div>
               </div>
@@ -141,11 +141,11 @@
             <div class="form-group">
                   <label for="inlineRadio1">Учет в ИС</label> <br> 
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="accounting" id="inlineRadio1" value="Да" checked>
+                      <input class="form-check-input" type="radio" name="accounting_in_is" id="inlineRadio1" value="Да" checked>
                       <label class="form-check-label" for="inlineRadio1">Да</label>
                   </div>
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="accounting" id="inlineRadio2" value="Нет">
+                      <input class="form-check-input" type="radio" name="accounting_in_is" id="inlineRadio2" value="Нет">
                       <label class="form-check-label" for="inlineRadio2">Нет</label>
                   </div>
             </div>
@@ -164,7 +164,7 @@
       <div class="item border border-left-0 border-right-0 mt-3">
           <p class="mt-3 ml-2 text-primary">Номер охранного документа <br><span class="text-dark lead">{{ doc.security_doc_num }}</span></p>
           <p class="ml-2 text-primary">Наименование <br><span class="text-dark lead text-nowrap">{{ doc.final_name }}</span></p>
-          <p class="ml-2 text-primary">Дата охранного документа <br><span class="text-dark lead">{{ doc.date_reg_is.isoformat }} </span></p>
+          <p class="ml-2 text-primary">Дата охранного документа <br><span class="text-dark lead">{{ doc.date_reg_is | date:"d-m-Y"  }} </span></p>
           <p class="ml-2"><a target="" href="document/{{doc.id_archive}}" class="text-dark">Показать документ<img width="16" height="16" src="{% static 'mainapp/image/arrow-up-right.svg' %}" alt="arrow"></a></p>
       </div>
     {% endfor %}

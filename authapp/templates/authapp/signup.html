@@ -29,6 +29,10 @@
         {% render_field form.password2  type="password" class="form-control" id="password_confirmation" placeholder="Подтверждение пароля"%}
       </div>
 
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="secret_key" id="secret_key" placeholder="Секретный ключ">
+      </div>
+
       <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегестрироваться</button>
       </form>
       {{ form.errors }}
